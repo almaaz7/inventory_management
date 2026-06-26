@@ -1,0 +1,6 @@
+CAPSTONE_SPEC.md
+last_export.txt
+python_learning_path.md
+__pycache__/
+venv/
+.env
