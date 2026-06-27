@@ -6,7 +6,7 @@ class CategorySerializer(serializers.ModelSerializer):
     breadcrumb = serializers.SerializerMethodField()
     class Meta:
         model = Category
-        fields = ['name', 'slug', 'parent_category_id', 'breadcrumb']
+        fields = ['name', 'slug', 'parent', 'breadcrumb']
 
     def get_breadcrumb(self, obj):
         trail = []
@@ -14,7 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
         while current is not None:
             trail.append(current.name)
-            current = current.parent_category_id
+            current = current.parent
         
         return ' > '.join(trail[::-1])
 
@@ -33,10 +33,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'sku', 'description', 'price', 'category_name', 'current_stock', 'suppliers']
+        fields = ['name', 'sku', 'description', 'price', 'category_name', 'current_stock', 'suppliers', 'category', 'supplier']
 
 class StockMovementSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockMovement
         fields = ['product', 'quantity', 'reason']
-        read_only_fields = ['created_by']

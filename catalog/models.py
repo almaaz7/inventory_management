@@ -9,7 +9,7 @@ class Category(models.Model):
 
     is_active = models.BooleanField(default=True)
 
-    parent_category_id = models.ForeignKey(
+    parent = models.ForeignKey(
         'self',
         on_delete=models.CASCADE,
         null=True,
@@ -75,7 +75,7 @@ class Product(models.Model):
 class StockMovement(models.Model):
 
     REASON_RECEIVED = 'received' 
-    REASON_SOLD = 'solf'
+    REASON_SOLD = 'sold'
     REASON_ADJUSTED = 'adjusted'
 
     REASON_CHOICES = [
@@ -100,7 +100,7 @@ class StockMovement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='inventory_actions'
     )
 

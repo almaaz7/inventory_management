@@ -1,5 +1,5 @@
 from django.db.models import Sum
-from django.db.models.base import Coalesce
+from django.db.models.functions import Coalesce
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import permission_classes
@@ -43,7 +43,7 @@ class StockMovementViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve', 'update', 'partial_update']:
+        if self.action in ['list', 'retrieve', 'create', 'update']:
             permission_classes = [IsAuthenticated, IsManager | IsStaff]
         else:
             permission_classes = [IsAuthenticated, IsManager]
