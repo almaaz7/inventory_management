@@ -25,7 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     
     def get_permissions(self):
-        if self.action in ['list', 'retrieve', 'update', 'partial_update']:
+        if self.action in ['list', 'retrieve']:
             permission_classes = [IsAuthenticated, IsManager | IsStaff]
         else:
             permission_classes = [IsAuthenticated, IsManager]
