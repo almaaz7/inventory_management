@@ -4,6 +4,10 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
+
+from .filters import ProductFilter
 
 from .permissions import IsManager, IsStaff
 from .models import Category, Supplier, Product, StockMovement
@@ -23,6 +27,16 @@ class SupplierViewSet(viewsets.ModelViewSet):
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+
+    filterset_class = ProductFilter
+
+    search_fields = ['name', 'sku']
+
+    ordering_fields = ['price', 'created_at']
+
+    ordering = ['-created_at']
     
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:

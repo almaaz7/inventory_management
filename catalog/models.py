@@ -1,3 +1,4 @@
+from time import timezone
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
@@ -59,6 +60,13 @@ class Product(models.Model):
     )
 
     is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['category', 'is_active']),
+        ]
 
     def delete(self, *args, **kwargs):
         self.is_active = False
