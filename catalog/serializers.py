@@ -27,8 +27,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
     category_name = serializers.CharField(source='category.name', read_only=True)
 
-    current_stock = serializers.IntegerField(source='calculated_stock', read_only=True)
-
     suppliers = serializers.SlugRelatedField(many=True, read_only=True, slug_field='name', source='supplier')
 
     class Meta:

@@ -122,6 +122,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5,
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -138,3 +140,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND')
+
+CELERY_BEAT_SCHEDULE = {
+    'hourly-low-stock-scanner': {
+        'task': 'catalog.tasks.low_stock_scan',
+        'schedule': 3600.0, # Runs every 3600 seconds (1 hour)
+        'kwargs': {'threshold': 20} # Pass custom threshold overrides here
+    },
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': env('CACHE_URL', default='redis://redis:6379/1'),
+    }
+}
+
+PRODUCT_LIST_CACHE_TTL = 300  # seconds
