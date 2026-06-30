@@ -1,6 +1,8 @@
-CAPSTONE_SPEC.md
+# CAPSTONE_SPEC.md is committed on purpose — it's the project plan and must travel with the repo.
+# last_export.txt (Claude session) and the learning-path notes stay out of the public repo — copy them by hand if you want them on another machine.
 last_export.txt
-python_learning_path.md
+Python_Learning_Path.md
 __pycache__/
 venv/
 .env
+celerybeat-schedule*
